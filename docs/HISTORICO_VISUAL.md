@@ -34,6 +34,12 @@ Nessa etapa, com movimento reduzido, a apresentação permanecia estática, sem 
 
 A revisão aprofundou a comparação com o snapshot público v22 e a inspeção da referência no navegador. Os mecanismos confirmados e as diferenças deliberadas estão em [Análise dos efeitos da referência](ANALISE_EFEITOS_REFERENCIA.md).
 
+## Empilhamento dos projetos no celular — 05/10/2026
+
+Após confirmação do usuário, foi reproduzido o mecanismo dos cartões de serviços da referência: rolagem nativa, primeiro cartão aderente a 14 px e segundo a 24 px, cobrindo o anterior. O efeito foi desacoplado do zoom do retrato, os espaços internos mobile foram ajustados e a área final da pilha passou a acompanhar a altura dos cartões.
+
+Cartões grandes seguem o fluxo normal para preservar a leitura. Foco visível por teclado eleva o cartão; toque não altera sua camada. Foram conferidas telas de 360, 375, 390 e 320 px de largura, incluindo detalhes abertos, movimento reduzido e acesso por teclado. A versão publicada anterior foi preservada em backup separado do commit `4a8aae7f0e821b427512096499e12b4e9378bd6f`.
+
 O cabeçalho passou a ser único, `.stage-top`, dentro do palco. A classe `.mobile-top` foi mantida para os ajustes responsivos. O sobrenome ganhou duas camadas: preenchimento atrás do retrato (`.surname-back`) e contorno à frente (`.surname-front`). São letras próprias de Daniel, sem importar a arte de nome da referência.
 
 A cena de rolagem passou a funcionar em desktop e mobile. O palco usa `100svh` com mínimos de composição; se não couber na altura estável da janela, a cena não é ativada e a página mantém rolagem normal. Quando habilitada, a faixa ocupa 2,3 vezes a altura do palco no desktop e 2,1 vezes no mobile. O zoom máximo continua em 2,9×, com deslocamento vertical de até 45 px e origem 50% 55%. O retrato da abertura recebeu limites base de largura e altura de 620 px, com ajustes mobile.

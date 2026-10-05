@@ -34,6 +34,16 @@ O contato ao vivo mostrou fundo quase preto, próximo de `#0b0b10`, feixe violet
 
 A referência guardava a preferência de movimento reduzido na inicialização do JavaScript. Mudar a preferência sem recarregar podia alterar o CSS e manter a animação JS desativada, produzindo uma impressão incorreta de que o zoom desktop não existia. A adaptação reage à preferência dinamicamente.
 
+### Empilhamento mobile dos cartões
+
+A inspeção com viewport de 390 × 844 px confirmou quatro cartões de serviços com `position:sticky` e recuos de 14, 24, 34 e 44 px. O cartão seguinte cobre o anterior durante a rolagem nativa. Não há slider ou faixa de badges nesse trecho. No snapshot v22, os cartões têm altura mínima de 470 px e margem inferior de 35 px; foram medidos com cerca de 524 px nessa tela.
+
+Nos dois projetos de Daniel, a adaptação usa recuos de 14/24 px, independentemente do zoom do retrato. Os espaçamentos internos mobile foram ajustados, preservando a tipografia e controles de pelo menos 44 px. Uma linha final do grid tem altura recalculada para sustentar as bordas da pilha mesmo quando um cartão expandido ainda cabe na tela. Cartões maiores que a área útil voltam ao fluxo normal, sem cortar conteúdo.
+
+O empilhamento usa apenas layout nativo, sem escala ou transição. Ele permanece no modo de movimento reduzido, ao contrário do CSS da referência; o zoom e as animações decorativas continuam desativados. A navegação por teclado eleva o cartão com foco visível, enquanto o toque mantém a ordem normal das camadas.
+
+Validação adicional em 05/10/2026: 360 × 640, 375 × 667, 390 × 844 e 320 × 568 px no navegador. Em 375 × 667, os cartões fechados mediram cerca de 590/566 px; o primeiro expandido mediu 698 px e voltou ao fluxo normal, com o resumo mantido na tela. Em 390 × 844, o cartão expandido continuou aderente e as duas bordas permaneceram nos recuos de 14/24 px. Na tela de 320 × 568, ambos ficaram em fluxo normal, sem excedente horizontal. Toque e foco por Tab foram conferidos. São testes de emulação, sem validação em aparelho físico.
+
 ## Elementos presentes no código, mas não ativos nessa versão
 
 - Há estilos antigos de `.gallery`, mas não uma galeria correspondente no HTML nem um controlador de slider ativo.

@@ -92,11 +92,13 @@ Quando habilitada, a faixa de cena tem **2,3 vezes a altura do palco no desktop*
 
 O script distingue foco de teclado com `keyboardMode`. Foco visível dentro do palco restaura a composição estática e os controles; `pointerdown` ou a roda do mouse retiram esse modo. Não bloqueie os eventos de roda ou toque para manter a foto parada.
 
-O script avalia se os cartões cabem na altura da tela antes de ativar o empilhamento sticky. Não force sticky em cartões que ultrapassam a área útil, pois isso pode ocultar conteúdo e links ao abrir os detalhes.
+O empilhamento dos projetos funciona independentemente da cena do retrato. Usa rolagem nativa e `position:sticky`, com recuos de 14/24 px no mobile e 40/54 px no desktop. O próximo cartão cobre o anterior. `--stack-tail` reserva uma pequena área final, recalculada conforme a altura dos cartões, para manter as bordas da pilha visíveis.
+
+O script avalia se cada cartão cabe na altura da tela antes de ativar sticky: altura útil menos o recuo e 24 px. Abrir detalhes refaz a avaliação; cartões maiores voltam ao fluxo normal, mantendo o resumo visível. Não force sticky em cartões que ultrapassam a área útil. A elevação por foco usa `:has(:focus-visible)` para atender ao teclado sem interferir na sobreposição após toque.
 
 `refinements.js` acrescenta a pausa geral no contato, entradas discretas e interações de ponteiro. A classe `body.effects-paused` e o evento `visual:motion`, com `{paused}`, coordenam os três scripts. Na pausa manual, a altura da faixa prolongada é preservada para evitar saltos de página, mas zoom, fade e profundidade voltam ao estado estático. A pausa manual continua ativa ao voltar de outra aba.
 
-`prefers-reduced-motion` desativa a faixa prolongada, zoom e animações contínuas, reagindo a mudanças durante a visita. Mantenha esse caminho estático com acesso aos mesmos textos, projetos e downloads. O controle local da parede de projetos permanece separado da pausa geral.
+`prefers-reduced-motion` desativa a faixa prolongada, zoom e animações contínuas, reagindo a mudanças durante a visita. O empilhamento nativo dos cartões permanece disponível, sem escala, transição ou loop de animação; só acompanha a rolagem voluntária. Essa é uma adaptação deliberada: o snapshot da referência desativa sticky nesse modo. Mantenha acesso aos mesmos textos, projetos e downloads. O controle local da parede de projetos permanece separado da pausa geral.
 
 O progresso `--about-depth` é escrito tanto em `.work-visual` quanto em `.career`; parede, pessoa e texto herdam suas velocidades de `refinements.css`. O cursor complementar e o tilt ficam restritos a ponteiro fino com hover em telas de pelo menos 900 px. O cursor nativo não é ocultado; o PDF não recebe tilt.
 
