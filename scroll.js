@@ -9,6 +9,7 @@
   const about = document.querySelector('.work-visual');
   const career = about?.closest('.career');
   const cards = [...document.querySelectorAll('.project')];
+  const cardList = document.querySelector('.project-list');
   const clamp = value => Math.max(0, Math.min(1, value));
   const smoothstep = (low, high, value) => {
     const t = clamp((value - low) / (high - low));
@@ -23,18 +24,31 @@
   const stableHeight = () => probe.getBoundingClientRect().height || innerHeight;
   function configureCards() {
     let correction = 0;
+    let highestBottom = 0, finalBottom = 0;
     cards.forEach((card, index) => {
       const inset = mobile.matches ? 14 + index * 10 : 40 + index * 14;
       const fits = card.offsetHeight <= viewportHeight - inset - 24;
+      if (fits) highestBottom = Math.max(highestBottom,inset + card.offsetHeight);
+      if (index === cards.length - 1) finalBottom = inset + card.offsetHeight;
       const wasSticky = card.classList.contains('sticky-card');
       const anchor = card.querySelector('summary') || card;
       const before = wasSticky && !fits ? anchor.getBoundingClientRect().top : null;
-      card.classList.toggle('sticky-card', enabled && fits);
+      // Native card stacking is independent of the animated portrait scene.
+      // No transform or animation loop: the reader controls it by scrolling.
+      card.classList.toggle('sticky-card', fits);
+      card.style.setProperty('--card-inset',`${inset}px`);
+      card.style.setProperty('--card-layer',index + 1);
       // Expanded content must remain visible when it no longer fits a viewport.
       if (before !== null && before >= 0 && before < viewportHeight) {
         correction = anchor.getBoundingClientRect().top - before;
       }
     });
+    if (cardList) {
+      const gap = parseFloat(getComputedStyle(cardList).rowGap) || 0;
+      // Keep both edges visible when an expanded card is taller than the next.
+      const tail = Math.ceil(Math.max(8,highestBottom - finalBottom + 24 - gap));
+      cardList.style.setProperty('--stack-tail',`${tail}px`);
+    }
     if (Math.abs(correction) > 1) window.scrollBy({ top:correction, behavior:'instant' });
   }
   function renderAbout() {
