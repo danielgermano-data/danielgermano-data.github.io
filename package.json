@@ -1,0 +1,15 @@
+{
+  "name": "portfolio-daniel-germano",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portfólio estático de Daniel Germano, com ferramentas locais sem dependências.",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "check": "node scripts/verificar.mjs",
+    "check:syntax": "node --check scripts/serve.mjs && node --check scripts/verificar.mjs && node --check effects.js && node --check scroll.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,52 @@
+/* Original effects adapted from the mechanisms observed at gabrielsodre.com. */
+[hidden]{display:none!important}
+button{font:inherit}
+.hero-portrait{pointer-events:auto;perspective:1000px}
+.portrait-reveal{position:absolute;inset:0;display:block;width:100%;height:100%;pointer-events:none;opacity:0;mask-image:linear-gradient(#000 0%,#000 69%,#000b 81%,transparent 99%)}
+.portrait-reveal.is-visible{opacity:.9}
+.portrait-trigger{position:absolute;inset:4% 16% 20%;z-index:2;border:0;border-radius:45%;background:transparent;cursor:crosshair;touch-action:pan-y}
+.portrait-trigger:focus-visible{outline:2px solid var(--accent);outline-offset:4px;background:#13778508}
+.portrait-switch{border:0;padding:5px 0 5px 12px;min-height:44px;background:transparent;text-align:right;color:var(--accent);font-size:11px;line-height:1.45;cursor:pointer}
+.portrait-switch small{display:block;font-size:10px;color:var(--muted);margin-top:2px}
+.portrait-switch:hover .switch-label{text-decoration:underline;text-underline-offset:4px}
+.hero-portrait>img{transform:translate(var(--portrait-x,0px),var(--portrait-y,0px));transition:transform .25s ease-out}
+.hero-portrait.is-exploring>img{transform:none}
+.button{position:relative;isolation:isolate;transition:transform .18s,filter .18s,box-shadow .18s}
+.button:before{content:'';position:absolute;inset:4px 7px 47%;z-index:-1;pointer-events:none;border-radius:50px 50px 65% 65%;border-top:1px solid #ffffff40;background:linear-gradient(#ffffff20,#ffffff04 76%,transparent)}
+.button:active{transform:translateY(2px);box-shadow:inset 0 2px 3px #ffffff25,0 2px 4px #0005}
+@media(hover:hover){.button:hover{transform:translateY(-1px);filter:brightness(1.1)}}
+
+/* A looping project wall with separate depth for the foreground portrait. */
+.work-visual{margin:38px 0 0;width:100%;max-width:470px}
+.work-scene{height:370px;position:relative;overflow:hidden;isolation:isolate;mask-image:linear-gradient(transparent,#000 10%,#000 84%,transparent)}
+.work-plane{position:absolute;inset:-35% -8%;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;transform:perspective(900px) rotateX(12deg) rotateY(-18deg) rotateZ(13deg);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 89%,transparent)}
+.poster-column{overflow:hidden}.poster-track{animation:project-reel 84s linear infinite;animation-play-state:paused}
+.poster-group{display:grid;gap:12px;padding-bottom:12px}.poster-group img{display:block;width:100%;height:auto;border-radius:7px;box-shadow:0 8px 18px #09283720}
+.poster-column:nth-child(2) .poster-track{animation-direction:reverse;animation-duration:96s}
+.poster-column:nth-child(3) .poster-track{animation-duration:90s}
+.work-visual.is-in-view:not(.is-paused) .poster-track{animation-play-state:running}
+.work-person{position:absolute;width:68%;height:auto;bottom:-1%;right:-1%;filter:grayscale(1) drop-shadow(-5px 1px 0 #f5f5f5);mask-image:linear-gradient(#000 70%,transparent 100%);pointer-events:none}
+.work-visual figcaption{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:9px;font-size:11px;color:var(--muted)}
+.motion-toggle{background:transparent;border:1px solid #aebdc2;border-radius:20px;color:#325460;padding:7px 13px;min-height:40px;font-size:11px;cursor:pointer}
+.motion-toggle:hover{background:#e5ecef}.motion-toggle:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+@keyframes project-reel{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+
+/* Slow light beams under translucent vertical glass ribs. */
+.contact-section{position:relative;isolation:isolate;overflow:hidden;background:#071f2c;color:#eef5f8;margin-top:0}
+.contact-glass{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;background:radial-gradient(ellipse at 85% 45%,#174553 0%,#0b2a3a 43%,#071f2c 76%)}
+.contact-light{position:absolute;width:94%;height:30%;left:28%;top:20%;border-radius:50%;background:radial-gradient(ellipse,#b5f1f6 0%,#78d4e2 16%,#25879e99 37%,#13778540 58%,transparent 74%);filter:blur(30px);transform:rotate(-35deg);animation:cyan-reflection 12s ease-in-out infinite alternate;animation-play-state:paused;opacity:.7}
+.contact-light-secondary{left:40%;top:70%;width:80%;height:19%;opacity:.5;animation-duration:16s;animation-delay:-6s}
+.contact-ribs{position:absolute;inset:0;background:repeating-linear-gradient(90deg,#ffffff0a 0px,#ffffff02 3px,transparent 8px,#02131d40 35px,#00000048 41px,#ffffff18 43px,transparent 46px);backdrop-filter:blur(2px);mask-image:linear-gradient(90deg,transparent,#0006 35%,#000 58%)}
+.contact-section.is-in-view .contact-light{animation-play-state:running}
+.contact-inner{position:relative;z-index:1}
+.contact-section .contact-label,.contact-section .contact-main>p{color:#c1d3dc}
+.contact-section .contact-main h2{color:#f5f8fa;text-shadow:0 2px 22px #071f2c40}
+.contact-section .contact-main h2 span{color:#92dbe5}
+.contact-section .email{color:#c1d3dc}.contact-section .email:hover{color:white}
+.contact-section .footer-bottom{border-color:#85a4b54d}.contact-section .footer-bottom p{color:#b1c8d3}
+.contact-section a:focus-visible{outline-color:#a5e5ed}.contact-section .footer-bottom a:hover{color:#a5e5ed}
+@keyframes cyan-reflection{0%{transform:translate(-4%,-7%) rotate(-35deg) scale(.94);opacity:.55}100%{transform:translate(8%,10%) rotate(-29deg) scale(1.08);opacity:.8}}
+@media(max-width:780px){.work-scene{height:290px}.work-visual figcaption{font-size:10px;gap:10px}.motion-toggle{padding:7px 9px;font-size:10px}}
+@media(max-width:600px){.portrait-switch{font-size:10px;max-width:135px}.portrait-switch small{font-size:9px}.work-visual{margin-top:32px;max-width:390px}.work-scene{height:330px}.work-person{width:72%}.work-plane{inset:-24% -6%;gap:10px}.poster-group{gap:10px;padding-bottom:10px}.contact-light{width:125%;left:20%;top:15%;height:24%;filter:blur(22px)}.contact-light-secondary{top:75%}.contact-ribs{mask-image:linear-gradient(90deg,#0004,#000)}.contact-section .contact-main>p{max-width:31ch}}
+@media(prefers-reduced-motion:reduce){.poster-track,.contact-light{animation:none!important}.hero-portrait>img{transform:none;transition:none}.button{transition:none}.button:hover{transform:none}.contact-light{opacity:.65}.work-visual .motion-toggle{display:none}}
+@media print{.work-visual,.portrait-switch,.contact-glass,.portrait-reveal,.portrait-trigger{display:none}.projects .section-intro{position:static}}
