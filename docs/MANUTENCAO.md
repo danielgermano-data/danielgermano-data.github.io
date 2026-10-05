@@ -19,7 +19,9 @@ A apresentação curta aparece também em `.mobile-summary`. Se mudar sua mensag
 
 Ao atualizar um cargo, mantenha o título real e as datas. Descreva contribuições verificáveis; não transforme um projeto pessoal em experiência empresarial. IA aplicada é a direção de estudo apresentada, sem alegar senioridade ou experiência em produção.
 
-Os links de navegação existem em duas versões de cabeçalho, `.desktop-top` e `.mobile-top`. Atualize ambas se acrescentar ou renomear seções. Preserve os identificadores usados por links e scripts.
+Há um cabeçalho único `.stage-top`, dentro da cena. Ele também mantém a classe `.mobile-top` para os ajustes responsivos; não existe mais uma navegação desktop separada para editar. Atualize seus links se acrescentar ou renomear seções e preserve os identificadores usados por links e scripts.
+
+O sobrenome gráfico aparece em `.surname-back` e `.surname-front`. Ao mudar seu texto, mantenha as duas camadas iguais. Elas são decorativas e têm `aria-hidden`; o nome acessível continua no cabeçalho e na apresentação profissional.
 
 ## 2. Currículo e prévias
 
@@ -39,13 +41,14 @@ O site não é um teste de ATS. Para o PDF, confira a seleção e a ordem de ext
 
 ## 3. Cores e composição
 
-O navegador carrega `style.css`, depois `effects.css` e por último `theme.css`. A última folha concentra a direção visual atual e as alterações para celular.
+O navegador carrega `style.css`, depois `effects.css`, `theme.css` e por último `refinements.css`. Preserve essa ordem e verifique a regra final aplicada no navegador quando mudar um componente.
 
 - `style.css`: espaçamento, tipografia, grids, títulos, cartões e estilos de impressão.
 - `effects.css`: Canvas, botões, parede de projetos e contato com luz e vidro.
-- `theme.css`: variáveis do tema violeta, máscaras, cena mobile e ajustes de movimento reduzido.
+- `theme.css`: variáveis do tema violeta, máscaras, palco desktop/mobile, duas camadas do sobrenome e ajustes de movimento reduzido.
+- `refinements.css`: entradas discretas, profundidade por camadas, acabamento de botões e vidro, tilt limitado e cursor complementar.
 
-O tema atual usa papel claro, texto escuro, violeta `#7c3489`, ameixa `#241128` e lavanda `#d8b5e8`. Ao alterar cores, confira texto, botões, links e indicadores de foco sobre fundos claros e escuros. Algumas cores dos efeitos estão declaradas diretamente nos gradientes, em `effects.js` e nas artes SVG; trocar apenas `--accent` não recolore tudo.
+O tema atual usa papel claro, texto escuro, violeta `#7c3489`, ameixa `#241128` e lavanda `#d8b5e8`. O contato recebe fundo quase preto `#0b0b10` e iluminação violeta em `refinements.css`. Ao alterar cores, confira texto, botões, links e indicadores de foco sobre fundos claros e escuros. Algumas cores dos efeitos estão declaradas diretamente nos gradientes, em `effects.js` e nas artes SVG; trocar apenas `--accent` não recolore tudo.
 
 As fontes ficam em `assets/manrope-regular.ttf`, `assets/manrope-semibold.ttf` e `assets/manrope-extrabold.ttf`. Preserve a licença OFL ao redistribuí-las.
 
@@ -73,17 +76,31 @@ Se optar por uma proporção diferente, não basta trocar o arquivo. Será neces
 
 Confira também os degradês de `mask-image` em `theme.css`, o enquadramento da `.work-person` e a origem do zoom mobile. A transparência do arquivo define o contorno da pessoa; os degradês suavizam ombros e bordas.
 
+Na abertura, a geometria base do retrato mantém `aspect-ratio:1` e limites de 620 px de largura/altura, com ajustes específicos para celular. Revise esses limites junto da altura do palco; ampliar apenas o tamanho da foto pode deslocar o rosto ou interferir nos botões.
+
 ## 5. Interação e movimento
 
-`effects.js` controla a exploração do retrato, o Canvas e a pausa das animações fora da tela. As artes utilizadas são `assets/project-bankguard.svg` e `assets/project-datatrace.svg`. Se trocar seus caminhos, atualize também a lista `posters` nesse script e as imagens do painel da trajetória no HTML.
+Os scripts são carregados com `defer` nesta ordem: `effects.js`, `scroll.js`, `refinements.js`.
 
-O retrato pode ser explorado por mouse, toque ou teclado. Os controles só aparecem quando as imagens e o efeito estão prontos. Preserve os atributos `aria-pressed`, os nomes acessíveis e a possibilidade de fechar a exploração com `Escape`.
+`effects.js` controla a exploração do retrato, o Canvas e a pausa das animações fora da tela. A lista atual chama-se `artwork` e contém `{name, src}` para BankGuard (`assets/project-bankguard.svg`) e DataTrace AI (`assets/project-datatrace.svg`). Se trocar os caminhos, atualize essa lista e as imagens do painel da trajetória no HTML. Os nomes também alimentam os rótulos acessíveis dos controles.
 
-`scroll.js` usa rolagem nativa para a cena mobile em telas de até 600 px. O zoom é controlado por variáveis CSS; a origem visual está em `theme.css`. O máximo atual é 2,9× e o deslocamento vertical é de até 45 px. Se mudar a foto, revise esse enquadramento antes de aumentar o zoom.
+O retrato pode ser explorado por mouse, toque ou teclado. Setas esquerda/direita trocam a arte, swipe horizontal troca no toque e `Escape` fecha a exploração. Os controles só aparecem quando as imagens e o efeito estão prontos. Preserve os atributos `aria-pressed`, os nomes acessíveis e `aria-keyshortcuts`.
+
+`scroll.js` usa rolagem nativa em desktop e mobile. O palco tem altura de `100svh` com mínimos de composição definidos no CSS. A cena prolongada só é ativada quando esse palco cabe na altura estável da janela: `stage.offsetHeight <= viewportHeight + 1`. Se não couber, o script mantém a apresentação com rolagem normal, sem sticky ou zoom. Não retire esse fallback para forçar a animação em telas baixas.
+
+Quando habilitada, a faixa de cena tem **2,3 vezes a altura do palco no desktop** e **2,1 vezes no mobile**, com breakpoint de 600 px. O máximo de zoom é 2,9×, o deslocamento vertical é de até 45 px e a origem do retrato é 50% 55%. Textos desaparecem no início e o véu claro encerra a cena. Se mudar a foto, revise esse enquadramento antes de aumentar o zoom.
+
+O script distingue foco de teclado com `keyboardMode`. Foco visível dentro do palco restaura a composição estática e os controles; `pointerdown` ou a roda do mouse retiram esse modo. Não bloqueie os eventos de roda ou toque para manter a foto parada.
 
 O script avalia se os cartões cabem na altura da tela antes de ativar o empilhamento sticky. Não force sticky em cartões que ultrapassam a área útil, pois isso pode ocultar conteúdo e links ao abrir os detalhes.
 
-`prefers-reduced-motion` desativa a rolagem prolongada, zoom e animações contínuas. Mantenha esse caminho estático com acesso aos mesmos textos, projetos e downloads. A pausa da parede de projetos é independente da preferência do sistema.
+`refinements.js` acrescenta a pausa geral no contato, entradas discretas e interações de ponteiro. A classe `body.effects-paused` e o evento `visual:motion`, com `{paused}`, coordenam os três scripts. Na pausa manual, a altura da faixa prolongada é preservada para evitar saltos de página, mas zoom, fade e profundidade voltam ao estado estático. A pausa manual continua ativa ao voltar de outra aba.
+
+`prefers-reduced-motion` desativa a faixa prolongada, zoom e animações contínuas, reagindo a mudanças durante a visita. Mantenha esse caminho estático com acesso aos mesmos textos, projetos e downloads. O controle local da parede de projetos permanece separado da pausa geral.
+
+O progresso `--about-depth` é escrito tanto em `.work-visual` quanto em `.career`; parede, pessoa e texto herdam suas velocidades de `refinements.css`. O cursor complementar e o tilt ficam restritos a ponteiro fino com hover em telas de pelo menos 900 px. O cursor nativo não é ocultado; o PDF não recebe tilt.
+
+A pintura animada do Canvas tem um intervalo programático mínimo de aproximadamente 32 ms e DPR limitado a 1,5. Isso é uma configuração de execução, não uma medição ou garantia de FPS em um dispositivo.
 
 ## 6. Conferência local
 
@@ -91,14 +108,17 @@ Execute `node scripts/verificar.mjs` e depois `node scripts/serve.mjs` (ou as ta
 
 - Desktop e larguras mobile de 390, 375 e 320 px, incluindo telas baixas.
 - Ausência de rolagem horizontal ou textos cortados.
-- Entrada, ampliação e saída da cena mobile.
+- Entrada, ampliação e saída da cena em desktop e mobile; fallback em telas que não comportam sua altura mínima.
 - Projetos com detalhes abertos e links alcançáveis.
-- Navegação por `Tab`, foco visível, `Enter` e `Escape` na exploração do retrato.
+- Navegação por `Tab`, foco visível, `Enter`, setas e `Escape` na exploração do retrato; retorno à rolagem normal pela roda do mouse.
 - Movimento reduzido e retorno ao modo normal durante a visita.
+- Pausa geral, mudança de aba e retomada; a pausa manual deve ser preservada.
 - Download do PDF e correspondência das duas prévias.
 - Console do navegador sem falhas de carregamento ou erros dos efeitos.
 
 A emulação de tamanho no navegador ajuda a verificar o layout, mas não substitui um teste em celular físico.
+
+Veja [Análise dos efeitos da referência](ANALISE_EFEITOS_REFERENCIA.md) para consultar mecanismos confirmados, escolhas da adaptação e limites dos testes.
 
 ## 7. Publicar e preservar o histórico
 

@@ -22,13 +22,35 @@ O tema começou em azul/ciano. Um pedido posterior aproximou a iluminação do v
 
 As artes dos projetos são representações gráficas, não telas de aplicações em produção. A exploração permite mouse, toque e teclado; a parede de projetos pode ser pausada. As animações respeitam movimento reduzido e são suspensas quando não são necessárias à apresentação.
 
-## Rolagem mobile
+## Primeira cena mobile — 05/10/2026, antes da revisão de efeitos
 
 No celular, a cena de abertura fica temporariamente fixa enquanto o retrato amplia, o nome e os textos desaparecem e uma camada clara encerra a transição. A rolagem continua nativa; os scripts não interceptam os gestos para simular uma rolagem própria.
 
 O zoom máximo adotado é 2,9×. O deslocamento foi reduzido para até 45 px ao revisar o enquadramento do rosto. A origem atual do zoom é 50% 55%. Cartões de projeto só recebem sticky quando cabem na altura útil; abrir os detalhes refaz essa avaliação.
 
-Com movimento reduzido, a apresentação permanece estática, sem a distância adicional de rolagem ou o zoom. Conteúdo, contatos e download continuam disponíveis.
+Nessa etapa, com movimento reduzido, a apresentação permanecia estática, sem a distância adicional de rolagem ou o zoom. Conteúdo, contatos e download continuavam disponíveis.
+
+## Revisão de efeitos e cena desktop/mobile — 05/10/2026
+
+A revisão aprofundou a comparação com o snapshot público v22 e a inspeção da referência no navegador. Os mecanismos confirmados e as diferenças deliberadas estão em [Análise dos efeitos da referência](ANALISE_EFEITOS_REFERENCIA.md).
+
+O cabeçalho passou a ser único, `.stage-top`, dentro do palco. A classe `.mobile-top` foi mantida para os ajustes responsivos. O sobrenome ganhou duas camadas: preenchimento atrás do retrato (`.surname-back`) e contorno à frente (`.surname-front`). São letras próprias de Daniel, sem importar a arte de nome da referência.
+
+A cena de rolagem passou a funcionar em desktop e mobile. O palco usa `100svh` com mínimos de composição; se não couber na altura estável da janela, a cena não é ativada e a página mantém rolagem normal. Quando habilitada, a faixa ocupa 2,3 vezes a altura do palco no desktop e 2,1 vezes no mobile. O zoom máximo continua em 2,9×, com deslocamento vertical de até 45 px e origem 50% 55%. O retrato da abertura recebeu limites base de largura e altura de 620 px, com ajustes mobile.
+
+O estado `keyboardMode` distingue navegação por teclado: foco visível restaura a composição e os controles, enquanto ponteiro ou roda do mouse devolvem o comportamento de rolagem. Não há interceptação dos gestos de rolagem.
+
+O motor do retrato passou de círculos suaves e faixas verticais para máscara orgânica de baixa resolução e distorção radial. A lista `artwork` usa as artes próprias de BankGuard e DataTrace AI. O ritmo é mais lento que o da referência: troca de 2,4 s, transição de 550 ms e pulso curto depois de 8 s de repouso elegível. Setas, swipe e Escape completam os controles.
+
+Os refinamentos acrescentaram entradas discretas sem ocultar conteúdo, profundidade distinta de parede/pessoa/texto, tilt pequeno em blocos de experiência e base técnica, e um anel de cursor complementar restrito a desktop com mouse. O cursor nativo e o currículo PDF permanecem preservados.
+
+O contato recebeu fundo quase preto `#0b0b10`, luz violeta diagonal à esquerda e na base, e vidro canelado vertical. Os botões conservaram a estrutura em cápsula, com reflexo e sombras refinados.
+
+“Pausar efeitos” coordena os scripts pelo evento `visual:motion` e pela classe `effects-paused`. A pausa manual preserva a altura da faixa, mas apresenta a cena sem zoom, fade ou profundidade; movimento reduzido desativa a faixa prolongada e reage a mudanças durante a visita. A pausa manual é mantida ao retornar à página.
+
+A ordem integrada é `style.css` → `effects.css` → `theme.css` → `refinements.css`, com scripts `effects.js` → `scroll.js` → `refinements.js`. Isso substitui a configuração anterior de três folhas de estilo e cena exclusivamente mobile.
+
+O intervalo programático do Canvas limita a frequência de pintura animada, e o DPR permanece limitado a 1,5. Esses limites não são uma medição de desempenho em hardware real. Inspeção em navegador ou emulação de viewport não equivale a teste em aparelho físico.
 
 ## Retratos preservados
 
