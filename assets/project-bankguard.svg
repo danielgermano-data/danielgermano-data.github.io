@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="600" viewBox="0 0 480 600" role="img" aria-labelledby="title desc">
+  <title id="title">BankGuard — dados bancários simulados</title>
+  <desc id="desc">Pôster vetorial do projeto BankGuard. Um fluxo abstrato liga Dados, Validação e API. Tecnologias: Python, PostgreSQL e FastAPI.</desc>
+  <defs>
+    <clipPath id="bounds"><rect width="480" height="600"/></clipPath>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="5" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M1 1 5 4 1 7" fill="none" stroke="#d8b5e8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  </defs>
+  <g clip-path="url(#bounds)">
+    <rect width="480" height="600" fill="#241128"/>
+    <path d="M480 156V452" fill="none" stroke="#7c3489" stroke-width="64"/>
+    <path d="M432 182V430" fill="none" stroke="#d8b5e8" stroke-width="2" opacity=".5"/>
+    <circle cx="27" cy="522" r="158" fill="none" stroke="#7c3489" stroke-width="2"/>
+    <circle cx="27" cy="522" r="120" fill="none" stroke="#7c3489" stroke-width="2"/>
+    <g font-family="Segoe UI, Arial, sans-serif">
+      <text x="34" y="89" fill="#f5f5f5" font-size="48" font-weight="700" letter-spacing="-2.2">BankGuard</text>
+      <text x="36" y="127" fill="#d8b5e8" font-size="21">Dados bancários simulados</text>
+      <path d="M36 174H100" stroke="#d8b5e8" stroke-width="6"/>
+
+      <g fill="none" stroke="#d8b5e8" stroke-width="2" marker-end="url(#arrow)">
+        <path d="M139 299H181"/>
+        <path d="M292 299H334"/>
+      </g>
+      <g fill="#d8b5e8">
+        <circle cx="87" cy="299" r="47"/>
+        <circle cx="240" cy="299" r="47"/>
+        <circle cx="393" cy="299" r="47"/>
+      </g>
+      <g fill="none" stroke="#241128" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <ellipse cx="87" cy="283" rx="18" ry="7"/>
+        <path d="M69 283V314C69 324 105 324 105 314V283M69 298C69 308 105 308 105 298"/>
+        <path d="M240 275 259 284V298C259 311 240 322 240 322S221 311 221 298V284Z"/>
+        <path d="m231 297 7 7 13-15"/>
+        <path d="m385 284-13 15 13 15m16-30 13 15-13 15m-4-34-8 38"/>
+      </g>
+      <g fill="#f5f5f5" font-size="22" font-weight="600" text-anchor="middle">
+        <text x="87" y="390">Dados</text>
+        <text x="240" y="390">Validação</text>
+        <text x="393" y="390">API</text>
+      </g>
+      <path d="M36 475H444" stroke="#7c3489" stroke-width="2"/>
+      <text x="36" y="542" fill="#f5f5f5" font-size="18" font-weight="600">Python / PostgreSQL / FastAPI</text>
+    </g>
+    <g fill="#d8b5e8"><rect x="401" y="55" width="12" height="12"/><rect x="422" y="55" width="12" height="12"/><rect x="401" y="76" width="12" height="12"/></g>
+  </g>
+</svg>
