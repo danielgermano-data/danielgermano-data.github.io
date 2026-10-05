@@ -24,7 +24,7 @@ node scripts/verificar.mjs
 
 A verificação automatizada confere arquivos locais, âncoras e sintaxe JavaScript, além de avisar quando o PDF difere da versão preservada. Ela complementa a revisão visual. Confira também a página no celular, o download do PDF, a navegação por teclado e o modo de movimento reduzido. Um resultado positivo não certifica aprovação por ATS ou funcionamento em todos os navegadores.
 
-No VS Code, use **Terminal → Executar Tarefa** e escolha **Site: abrir servidor local** ou **Site: verificar arquivos e referências**. Se npm estiver instalado, `npm run dev` e `npm run check` são atalhos equivalentes. Nenhuma instalação de pacotes é necessária.
+No VS Code, use **Terminal → Executar Tarefa** e escolha **Site: abrir servidor local** ou **Site: verificar arquivos e referências**. Nenhuma instalação de pacotes é necessária.
 
 ## Estrutura
 
@@ -32,9 +32,11 @@ No VS Code, use **Terminal → Executar Tarefa** e escolha **Site: abrir servido
 index.html                    Conteúdo e estrutura da página
 style.css                     Layout, tipografia e componentes
 effects.css                   Máscara do retrato e efeitos visuais
-theme.css                     Tema violeta e composição mobile
+theme.css                     Tema violeta e cenas desktop/mobile
+refinements.css               Profundidade e acabamento editorial
 effects.js                    Canvas e controle de animações
-scroll.js                     Cena mobile vinculada à rolagem
+scroll.js                     Cenas vinculadas à rolagem nativa
+refinements.js                Entradas, tilt, cursor e pausa geral
 curriculo-daniel-germano.pdf    Currículo oferecido para download
 assets/                       Fontes, retratos, artes e prévias do PDF
 scripts/                      Servidor e verificações locais
@@ -43,7 +45,9 @@ docs/                         Manutenção e histórico visual
 edicao/origem/                Arquivos históricos locais; fora do Git
 ```
 
-As folhas de estilo são carregadas nesta ordem: `style.css`, `effects.css`, `theme.css`. O tema sobrescreve a base quando necessário.
+As folhas de estilo são carregadas nesta ordem: `style.css`, `effects.css`, `theme.css`, `refinements.css`. Os scripts com `defer` usam `effects.js`, `scroll.js`, `refinements.js`, nessa ordem. Preserve essa sequência: tema e refinamentos sobrescrevem a base, e a pausa geral coordena os motores de efeito.
+
+A abertura usa um cabeçalho único `.stage-top`, com a classe `.mobile-top` mantida como apoio à composição responsiva. O sobrenome tem duas camadas, `.surname-back` e `.surname-front`, atrás e à frente do retrato.
 
 ## Atualizar o site
 
@@ -52,9 +56,16 @@ As folhas de estilo são carregadas nesta ordem: `style.css`, `effects.css`, `th
 - Cores e composição mobile: `theme.css`.
 - Layout geral: `style.css`.
 - Efeitos e interação no retrato: `effects.css` e `effects.js`.
-- Zoom mobile e empilhamento de projetos: `scroll.js`.
+- Zoom desktop/mobile e empilhamento de projetos: `scroll.js`.
+- Entradas, profundidade, tilt, cursor complementar e pausa geral: `refinements.css` e `refinements.js`.
 
-As instruções completas estão em [Manutenção](docs/MANUTENCAO.md). A origem da composição, os tratamentos do retrato e as limitações da exportação 8K estão em [Histórico visual](docs/HISTORICO_VISUAL.md).
+As instruções completas estão em [Manutenção](docs/MANUTENCAO.md). A origem da composição, os tratamentos do retrato e as limitações da exportação 8K estão em [Histórico visual](docs/HISTORICO_VISUAL.md). A [Análise dos efeitos da referência](docs/ANALISE_EFEITOS_REFERENCIA.md) distingue mecanismos confirmados, escolhas da adaptação e limites de validação.
+
+## Movimento e acesso
+
+Quando o palco cabe na altura útil, a cena usa 2,3 vezes sua altura no desktop e 2,1 vezes no mobile, com zoom máximo de 2,9×. Em telas baixas que não comportam o palco, a leitura segue pela rolagem normal.
+
+“Pausar efeitos” preserva a altura da cena e apresenta o retrato sem zoom. Movimento reduzido desativa a cena prolongada e reage a mudanças durante a visita. Foco por teclado mantém os controles legíveis, enquanto mouse e roda de rolagem continuam usando a navegação nativa. O cursor do sistema permanece disponível.
 
 ## Publicação no GitHub Pages
 

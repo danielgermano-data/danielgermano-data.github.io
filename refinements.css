@@ -1,0 +1,133 @@
+/* Editorial depth around Daniel's own projects. Content stays readable without JS. */
+.motion-enhanced [data-entrance]{
+  transition:opacity .65s ease,transform .65s cubic-bezier(.2,.7,.2,1);
+}
+.motion-enhanced [data-entrance].entrance-pending{
+  opacity:.82;
+  transform:translateY(14px);
+}
+.motion-enhanced [data-entrance].entrance-visible,
+.motion-enhanced [data-entrance]:focus-within{
+  opacity:1;
+  transform:none;
+}
+.motion-enhanced [data-entrance]:focus-within{transition:none}
+
+/* Three speeds share the progress supplied by scroll.js on .career. */
+.work-plane{
+  transform:translateY(calc(var(--about-depth,0) * 23px))
+    perspective(540px) rotateX(28deg) rotateY(-12deg) rotateZ(16deg);
+}
+.career .section-intro > :is(h2,p,a){
+  translate:0 calc(var(--about-depth,0) * 12px);
+}
+.work-person{transform:translateY(calc(var(--about-depth,0) * 55px))}
+
+/* A raised dark shell: reflected cap, restrained ground shadow. */
+.button{
+  box-shadow:inset 0 2px 2px #ffffff3d,inset 0 -2px 3px #ffffff18,
+    0 3px 3px #0005,0 9px 14px #0002,0 17px 24px #00000012;
+}
+.button:before{
+  inset:5px 7px 44%;
+  border-radius:999px 999px 65% 65%;
+  background:linear-gradient(#ffffff25,#ffffff07 68%,transparent);
+  border-top:1px solid #ffffff40;
+}
+.button:active{
+  box-shadow:inset 0 2px 3px #ffffff25,0 2px 4px #0005,0 5px 9px #0002;
+}
+
+/* Keep the glass in the background of the readable contact surface. */
+.contact-section{background:#0b0b10}
+.contact-glass{
+  background:radial-gradient(ellipse at 20% 60%,#322047aa,transparent 68%),#0b0b10;
+}
+.contact-light{
+  width:115%;height:30%;left:-40%;top:36%;filter:blur(28px);
+  background:radial-gradient(ellipse,#f5c7ff 0%,#c979ff 15%,#943deb 33%,#4933bb80 53%,transparent 72%);
+  animation-name:editorial-glass-sweep;animation-duration:9s;
+}
+.contact-light-secondary{
+  top:87%;left:-33%;width:80%;height:20%;opacity:.6;
+  animation-duration:12s;animation-delay:-4s;
+}
+.contact-ribs{
+  backdrop-filter:blur(3px);
+  background:repeating-linear-gradient(90deg,#ffffff08 0,#ffffff02 2px,
+    transparent 5px,#09051318 38px,#00000045 43px,#ffffff14 44px,transparent 46px);
+  mask-image:linear-gradient(90deg,#000,#000 55%,transparent 92%);
+}
+.contact-glass:after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,#0b0b1066,#0b0b1030 45%,#0b0b1080),
+    linear-gradient(0deg,#0b0b10 0%,transparent 25%,#0b0b1020);
+}
+@keyframes editorial-glass-sweep{
+  0%{transform:translate(-4%,-8%) rotate(43deg) scale(.95);opacity:.55}
+  50%{opacity:.85}
+  100%{transform:translate(10%,12%) rotate(37deg) scale(1.13);opacity:.7}
+}
+.motion-all-toggle{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:fit-content;min-height:44px;margin-top:25px;padding:10px 17px;
+  border:1px solid #b995c066;border-radius:999px;background:#ffffff08;
+  color:#e6d7ed;font-size:12px;line-height:1.4;cursor:pointer;
+}
+.motion-all-toggle:hover{background:#ffffff14}
+.motion-all-toggle:focus-visible{outline:3px solid #e0c0ef;outline-offset:5px}
+.motion-all-toggle:disabled{opacity:.65;cursor:default}
+.motion-all-toggle:before{content:'Ⅱ';font-size:12px}
+.motion-all-toggle[aria-pressed=true]:before{content:'▷'}
+
+/* This ring supplements the operating-system pointer; it never replaces it. */
+.refined-pointer{
+  position:fixed;left:0;top:0;z-index:1000;pointer-events:none;
+  width:20px;height:20px;border:1px solid #ffffffc4;border-radius:50%;
+  background:#ffffff08;mix-blend-mode:difference;opacity:0;
+  transform-origin:center;will-change:transform,width,height;
+}
+@media(min-width:900px) and (hover:hover) and (pointer:fine){
+  .refined-tilt{
+    transform:perspective(1100px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg));
+    transform-origin:50% 35%;transition:transform .25s cubic-bezier(.2,.7,.2,1);
+  }
+  .refined-tilt:focus-within{transform:none;transition:none}
+}
+@media(max-width:600px){
+  .work-plane{
+    transform:translateY(calc(var(--about-depth,0) * 18px))
+      perspective(440px) rotateX(28deg) rotateY(-12deg) rotateZ(16deg);
+  }
+  .career .section-intro > :is(h2,p,a){translate:0 calc(var(--about-depth,0) * 8px)}
+  .contact-light{width:180%;left:-75%;top:28%;height:26%;filter:blur(22px)}
+  .contact-light-secondary{top:80%;left:-50%;width:80%;height:20%}
+}
+
+/* Automatic motion stops globally. Direct button feedback remains available. */
+.effects-paused .poster-track,
+.effects-paused .contact-light{animation-play-state:paused!important}
+.effects-paused .portrait-reveal{animation:none!important;transition:none!important}
+.effects-paused [data-entrance]{opacity:1;transform:none;transition:none}
+.effects-paused .refined-pointer{display:none}
+.effects-paused .refined-tilt{transform:none;transition:none}
+.effects-paused .career .section-intro > :is(h2,p,a){translate:none}
+.effects-paused .work-person{transform:none}
+.effects-paused .work-plane{
+  transform:perspective(540px) rotateX(28deg) rotateY(-12deg) rotateZ(16deg);
+}
+@media(prefers-reduced-motion:reduce){
+  .motion-enhanced [data-entrance]{opacity:1;transform:none;transition:none}
+  .refined-pointer{display:none!important}
+  .refined-tilt{transform:none!important;transition:none!important}
+  .career .section-intro > :is(h2,p,a){translate:none}
+  .work-person{transform:none}
+  .work-plane{transform:perspective(540px) rotateX(28deg) rotateY(-12deg) rotateZ(16deg)}
+  .poster-track,.contact-light{animation:none!important}
+  .portrait-reveal{transition:none!important}
+}
+@media print{
+  .motion-all-toggle,.refined-pointer{display:none!important}
+  .motion-enhanced [data-entrance],.refined-tilt{opacity:1;transform:none;transition:none}
+  .career .section-intro > :is(h2,p,a){translate:none}
+}
