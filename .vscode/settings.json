@@ -1,0 +1,15 @@
+{
+  "files.encoding": "utf8",
+  "files.eol": "\n",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+  "search.exclude": {
+    "edicao/origem/**": true,
+    ".git/**": true
+  },
+  "files.watcherExclude": {
+    "**/edicao/origem/**": true
+  }
+}
